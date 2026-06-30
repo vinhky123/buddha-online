@@ -21,7 +21,7 @@ window.Chua = window.Chua || {};
       greeting: "Nam mô A Di Đà Phật",
       intro:
         "Hãy thắp một nén hương, dâng lời nguyện — cầu bình an, thành tựu cho mình và người thương.",
-      buddha: { alt: "Tượng Phật trên đài sen" },
+      buddha: { alt: "Tượng Phật trên đài sen", loading: "Đang tải tượng Phật…" },
       burner: { action: "Thắp hương", hint: "Nhấp để thắp hương" },
       bell: { action: "Gõ chuông", hint: "Gõ chuông" },
       nav: {
@@ -75,7 +75,7 @@ window.Chua = window.Chua || {};
       greeting: "Namo Amitabha Buddha",
       intro:
         "Light a stick of incense, offer a prayer — for peace and fulfilment, for yourself and those you love.",
-      buddha: { alt: "Buddha statue upon the lotus throne" },
+      buddha: { alt: "Buddha statue upon the lotus throne", loading: "Loading the Buddha…" },
       burner: { action: "Light incense", hint: "Click to light incense" },
       bell: { action: "Ring the bell", hint: "Ring the bell" },
       nav: {

@@ -176,19 +176,16 @@
       </div>
 
       <div class="buddha-stage">
-        <!-- ============ BUDDHA (inline, styled) ============ -->
+        <!-- loader shown until assets/buddha.webp loads (no drawn-SVG fallback) -->
+        <div class="buddha-loader" id="buddha-loader" role="status" aria-live="polite">
+          <span class="buddha-loader-ring" aria-hidden="true"></span>
+          <span class="sr-only" data-i18n="buddha.loading">Đang tải tượng Phật…</span>
+        </div>
+
+        <!-- ============ BUDDHA — aura, light rays, lotus throne + photo ============ -->
         <svg class="buddha" viewBox="0 0 420 580" role="img" aria-labelledby="buddha-cap">
           <title id="buddha-cap" data-i18n="buddha.alt">Tượng Phật trên đài sen</title>
           <defs>
-            <linearGradient id="g-body" x1="0.3" y1="0" x2="0.7" y2="1">
-              <stop offset="0" stop-color="#fff1c2" /><stop offset="0.42" stop-color="#ecd079" /><stop offset="0.78" stop-color="#c69a36" /><stop offset="1" stop-color="#9c7620" />
-            </linearGradient>
-            <linearGradient id="g-body-shade" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0" stop-color="#e6c258" /><stop offset="1" stop-color="#8a6a1c" />
-            </linearGradient>
-            <linearGradient id="g-robe" x1="0" y1="0" x2="1" y2="1">
-              <stop offset="0" stop-color="#f2d778" stop-opacity="0.9" /><stop offset="1" stop-color="#9c7620" stop-opacity="0.6" />
-            </linearGradient>
             <radialGradient id="g-halo" cx="0.5" cy="0.4" r="0.55">
               <stop offset="0" stop-color="#fff6cf" stop-opacity="0.95" /><stop offset="0.4" stop-color="#e7bf4e" stop-opacity="0.55" /><stop offset="0.75" stop-color="#d4af37" stop-opacity="0.12" /><stop offset="1" stop-color="#d4af37" stop-opacity="0" />
             </radialGradient>
@@ -223,56 +220,10 @@
             <path d="M86 502 Q210 540 334 502 L320 524 Q210 556 100 524 Z" fill="url(#g-throne-base)" />
           </g>
 
-          <!-- figure -->
-          <g class="b-figure">
-            <!-- crossed legs -->
-            <path d="M120 442 Q150 360 210 358 Q270 360 300 442 Q300 470 210 480 Q120 470 120 442 Z" fill="url(#g-body)" />
-            <path d="M150 432 Q210 456 270 432 M132 462 Q210 476 288 462" fill="none" stroke="#9c7620" stroke-opacity="0.4" stroke-width="2" />
-            <!-- hands in lap -->
-            <g class="b-hands">
-              <path d="M158 410 Q210 392 262 410 Q262 432 210 436 Q158 432 158 410 Z" fill="url(#g-body-shade)" />
-              <path d="M176 414 Q210 404 244 414" fill="none" stroke="#7a5a14" stroke-opacity="0.55" stroke-width="2" />
-              <ellipse cx="210" cy="412" rx="14" ry="7" fill="#9c7620" opacity="0.5" />
-            </g>
-            <!-- torso -->
-            <path d="M150 372 Q156 262 210 252 Q264 262 270 372 Q270 402 210 410 Q150 402 150 372 Z" fill="url(#g-body)" />
-            <!-- monastic sash -->
-            <path d="M172 262 Q206 300 248 272 Q232 360 210 402 Q188 360 172 262 Z" fill="url(#g-robe)" />
-            <path d="M194 252 Q210 306 226 252" fill="none" stroke="#9c7620" stroke-opacity="0.6" stroke-width="2.5" />
-            <path d="M164 300 Q210 330 256 300 M170 330 Q210 356 250 330" fill="none" stroke="#9c7620" stroke-opacity="0.35" stroke-width="2" />
-            <!-- neck -->
-            <path d="M196 210 L196 250 Q210 258 224 250 L224 210 Z" fill="url(#g-body)" />
-            <path d="M198 232 Q210 238 222 232" fill="none" stroke="#9c7620" stroke-opacity="0.4" stroke-width="1.5" />
-            <!-- head -->
-            <circle cx="210" cy="158" r="55" fill="url(#g-body)" />
-            <!-- ushnisha -->
-            <path d="M186 112 Q210 74 234 112 Q232 126 210 128 Q188 126 186 112 Z" fill="url(#g-body)" />
-            <circle cx="210" cy="100" r="9" fill="url(#g-body-shade)" />
-            <!-- hair curls -->
-            <g fill="#b8902a" opacity="0.7">
-              <circle cx="176" cy="120" r="4" /><circle cx="190" cy="112" r="4" /><circle cx="206" cy="108" r="4" /><circle cx="222" cy="110" r="4" /><circle cx="236" cy="118" r="4" />
-              <circle cx="168" cy="134" r="4" /><circle cx="184" cy="128" r="4" /><circle cx="200" cy="124" r="4" /><circle cx="216" cy="124" r="4" /><circle cx="232" cy="128" r="4" /><circle cx="248" cy="134" r="4" />
-            </g>
-            <!-- ears -->
-            <path d="M158 150 Q148 180 160 198 Q172 194 168 176 Q165 160 158 150 Z" fill="url(#g-body)" />
-            <path d="M262 150 Q272 180 260 198 Q248 194 252 176 Q255 160 262 150 Z" fill="url(#g-body)" />
-            <!-- face -->
-            <g class="b-face" fill="none" stroke="#7a4f12" stroke-opacity="0.75" stroke-width="2" stroke-linecap="round">
-              <circle cx="210" cy="134" r="3.4" fill="#a85a14" stroke="none" />
-              <path d="M186 146 Q196 142 206 146" /><path d="M214 146 Q224 142 234 146" />
-              <path d="M184 160 Q195 166 206 160" /><path d="M214 160 Q225 166 236 160" />
-              <path d="M210 150 Q206 168 210 176 Q214 178 218 174" />
-              <path d="M198 184 Q210 192 222 184" />
-            </g>
-          </g>
-
-          <!-- ======================================================
-               OPTIONAL PHOTO — a transparent Buddha PNG.
-               Drop a file at assets/buddha.png and it replaces the
-               drawn figure above automatically (see buddha.css +
-               main.js). Tune x/y/width/height to seat it on the lotus.
-               ====================================================== -->
-          <image class="b-photo" href="assets/buddha.png"
+          <!-- Buddha photo — assets/buddha.webp IS the figure (no drawn-SVG
+               fallback). main.js hides #buddha-loader once it loads; on
+               failure the loader stays. Tune x/y/width/height to seat it. -->
+          <image class="b-photo" href="assets/buddha.webp"
                  x="60" y="45" width="300" height="445"
                  preserveAspectRatio="xMidYMax meet" />
         </svg>

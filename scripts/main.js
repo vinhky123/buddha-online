@@ -193,17 +193,18 @@ window.Chua = window.Chua || {};
     });
   }
 
-  /* ============== Buddha photo (optional) ==============
-     If a transparent assets/buddha.png exists, swap the drawn figure
-     for the photo. No-op (drawn Buddha stays) if the file is missing. */
-  function applyBuddhaPhoto() {
-    const svg = document.querySelector(".buddha");
-    if (!svg) return;
+  /* ============== Buddha photo loader ==============
+     assets/buddha.webp is the only Buddha — there is no drawn-SVG
+     fallback. Keep #buddha-loader visible until the file loads; if it
+     fails to load, the loader simply remains. */
+  function bootBuddha() {
+    const loader = document.getElementById("buddha-loader");
+    if (!loader) return;
     const probe = new Image();
     probe.onload = function () {
-      svg.classList.add("has-photo");
+      loader.hidden = true;
     };
-    probe.src = "assets/buddha.png";
+    probe.src = "assets/buddha.webp";
   }
 
   /* ============== boot ============== */
@@ -228,7 +229,7 @@ window.Chua = window.Chua || {};
     wireTools();
     wireOverlays();
 
-    applyBuddhaPhoto();
+    bootBuddha();
   }
 
   if (document.readyState === "loading") {

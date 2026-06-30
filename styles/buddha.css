@@ -33,16 +33,30 @@
   animation: breathe 9s var(--ease-in-out-soft) infinite;
 }
 
-/* face details stay crisp (no blur) */
-.b-face { filter: drop-shadow(0 0 0.4px rgba(0, 0, 0, 0.25)); }
+/* Buddha photo — assets/buddha.webp IS the figure (the drawn Buddha was
+   removed). main.js hides #buddha-loader once the file loads; on failure
+   the loader stays (no SVG fallback). */
+.buddha .b-photo { display: block; }
 
-/* ---- Optional Buddha photo (transparent PNG at assets/buddha.png) ----
-   Hidden by default; main.js adds .has-photo to <svg.buddha> once the
-   file loads successfully, which hides the drawn figure and shows the
-   photo. If the file is absent/404, the drawn Buddha simply remains. */
-.buddha .b-photo { display: none; }
-.buddha.has-photo .b-photo { display: block; }
-.buddha.has-photo .b-figure { display: none; }
+/* ---- Buddha loader (shown until buddha.webp loads) ---- */
+.buddha-loader {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: grid;
+  place-items: center;
+  pointer-events: none;
+}
+.buddha-loader[hidden] { display: none; }
+.buddha-loader-ring {
+  width: clamp(48px, 9vw, 72px);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  border: 3px solid rgba(212, 175, 55, 0.22);
+  border-top-color: var(--gold-400);
+  filter: drop-shadow(0 0 8px rgba(255, 207, 90, 0.45));
+  animation: buddha-spin 1s linear infinite;
+}
 
 @media (prefers-reduced-motion: reduce) {
   .buddha,

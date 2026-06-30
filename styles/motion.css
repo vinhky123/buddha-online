@@ -58,6 +58,10 @@
   100% { background-position: 200% 0; }
 }
 
+@keyframes buddha-spin {
+  to { transform: rotate(360deg); }
+}
+
 @keyframes bell-swing {
   0%   { transform: rotate(0deg); }
   18%  { transform: rotate(7deg); }
