@@ -1,9 +1,9 @@
 /* =========================================================================
-   AUDIO — WebAudio synth (no external assets).
-   Temple bell, bright chime, soft tone, ambient drone pad.
-   Context is created lazily and resumed on the first user gesture
-   (browsers block autoplay otherwise). Every method no-ops gracefully
-   if WebAudio is unavailable.
+   AUDIO — WebAudio synth (bell, chime, soft swell) + YouTube ambient track.
+   The header sound toggle plays/pauses a looping YouTube video instead of a
+   synth pad. WebAudio context is created lazily and resumed on the first user
+   gesture (browsers block autoplay otherwise). Every method no-ops gracefully
+   if WebAudio / the YT player is unavailable.
    ========================================================================= */
 window.Chua = window.Chua || {};
 
@@ -14,8 +14,98 @@ window.Chua = window.Chua || {};
 
   let ctx = null;
   let master = null;
-  let ambientNodes = null;
   let ambientOn = false;
+
+  /* ============== YouTube ambient track ==============
+     Loads the IFrame Player API once, then lazily builds a hidden,
+     audio-only player. playVideo/pauseVideo are driven by the ambient
+     toggle so the existing sound button works unchanged. */
+  const YT_VIDEO_ID = "lmYlOxyOESw";
+  const YT_HOST = "https://www.youtube.com";
+  let ytPlayer = null;
+  let ytReady = false;
+  let ytWantPlaying = false;
+
+  function loadYouTubeApi() {
+    if (window.YT && window.YT.Player) return Promise.resolve();
+    if (!document.getElementById("yt-iframe-api")) {
+      const tag = document.createElement("script");
+      tag.id = "yt-iframe-api";
+      tag.src = YT_HOST + "/iframe_api";
+      document.head.appendChild(tag);
+    }
+    return new Promise(function (resolve) {
+      if (window.YT && window.YT.Player) return resolve();
+      const prev = window.onYouTubeIframeAPIReady;
+      window.onYouTubeIframeAPIReady = function () {
+        if (typeof prev === "function") prev();
+        resolve();
+      };
+    });
+  }
+
+  function buildYouTubePlayer() {
+    if (ytPlayer) return Promise.resolve(ytPlayer);
+    let host = document.getElementById("yt-ambient-host");
+    if (!host) {
+      host = document.createElement("div");
+      host.id = "yt-ambient-host";
+      // Off-screen, audio-only — never visible, never interactive.
+      host.style.cssText =
+        "position:fixed;width:1px;height:1px;left:-9999px;top:-9999px;opacity:0;pointer-events:none;";
+      document.body.appendChild(host);
+      const inner = document.createElement("div");
+      inner.id = "yt-ambient-player";
+      host.appendChild(inner);
+    }
+    return loadYouTubeApi().then(
+      function () {
+        return new Promise(function (resolve) {
+          ytPlayer = new window.YT.Player("yt-ambient-player", {
+            videoId: YT_VIDEO_ID,
+            // loop the single track: loop=1 requires playlist=<same id>
+            playerVars: {
+              autoplay: 1,
+              controls: 0,
+              disablekb: 1,
+              fs: 0,
+              loop: 1,
+              playlist: YT_VIDEO_ID,
+              modestbranding: 1,
+              playsinline: 1,
+              rel: 0,
+            },
+            events: {
+              onReady: function (e) {
+                ytReady = true;
+                try {
+                  e.target.setVolume(55);
+                } catch (err) {
+                  /* volume unsupported — ignore */
+                }
+                if (ytWantPlaying) e.target.playVideo();
+                resolve(ytPlayer);
+              },
+              onStateChange: function (e) {
+                // Restart cleanly if the track ever ends despite the loop.
+                if (e.data === window.YT.PlayerState.ENDED) {
+                  try {
+                    e.target.seekTo(0);
+                    e.target.playVideo();
+                  } catch (err) {
+                    /* ignore */
+                  }
+                }
+              },
+              onError: function () {
+                ytReady = false;
+              },
+            },
+          });
+        });
+      }
+    );
+  }
 
   function ensure() {
     if (ctx) return ctx;
@@ -117,57 +207,35 @@ window.Chua = window.Chua || {};
     partial(587.33, 0.04, 1.4, 0.07, "sine");
   }
 
-  /* Soft ambient drone pad — a low root and fifth with a slow swell. */
+  /* Ambient background music — the YouTube track, looping. The player is
+     built lazily on the first call (after a user gesture, so autoplay is
+     allowed). Until it is ready, the toggle still flips its on/off state. */
   function startAmbient() {
-    const c = resume();
-    if (!c || ambientOn) return;
+    if (ambientOn) return;
     ambientOn = true;
-
-    const pad = c.createGain();
-    pad.gain.value = 0.0001;
-    const filt = c.createBiquadFilter();
-    filt.type = "lowpass";
-    filt.frequency.value = 420;
-    filt.Q.value = 0.4;
-    pad.connect(filt);
-    filt.connect(master);
-
-    const freqs = [110, 110.6, 164.81]; // A2 (detuned pair) + E3 fifth
-    const oscs = freqs.map((freq, i) => {
-      const osc = c.createOscillator();
-      osc.type = i === 2 ? "triangle" : "sine";
-      osc.frequency.value = freq;
-      const og = c.createGain();
-      og.gain.value = i === 2 ? 0.22 : 0.5;
-      osc.connect(og);
-      og.connect(pad);
-      osc.start();
-      return osc;
+    ytWantPlaying = true;
+    buildYouTubePlayer().then(function (player) {
+      if (player && ytReady && ytWantPlaying) {
+        try {
+          player.playVideo();
+        } catch (err) {
+          /* player not ready — onReady will start it */
+        }
+      }
     });
-
-    const lfo = c.createOscillator();
-    lfo.frequency.value = 0.06;
-    const lfoGain = c.createGain();
-    lfoGain.gain.value = 0.045;
-    lfo.connect(lfoGain);
-    lfoGain.connect(pad.gain);
-    lfo.start();
-
-    pad.gain.exponentialRampToValueAtTime(0.1, c.currentTime + 2.5);
-    ambientNodes = { pad: pad, oscs: oscs, lfo: lfo };
   }
 
   function stopAmbient() {
-    if (!ctx || !ambientOn || !ambientNodes) return;
+    if (!ambientOn) return;
     ambientOn = false;
-    const t = ctx.currentTime;
-    const pad = ambientNodes.pad;
-    pad.gain.cancelScheduledValues(t);
-    pad.gain.setValueAtTime(0.0001, t);
-    pad.gain.linearRampToValueAtTime(0.0001, t + 1.2);
-    ambientNodes.oscs.forEach((osc) => osc.stop(t + 1.3));
-    ambientNodes.lfo.stop(t + 1.3);
-    ambientNodes = null;
+    ytWantPlaying = false;
+    if (ytPlayer && ytReady) {
+      try {
+        ytPlayer.pauseVideo();
+      } catch (err) {
+        /* ignore */
+      }
+    }
   }
 
   Chua.audio = {
