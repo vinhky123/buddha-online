@@ -1,0 +1,113 @@
+/* =========================================================================
+   DESIGN TOKENS — Traditional Golden Temple (Chùa)
+   Palette · typography · spacing · motion · elevation · z-index
+   All visual decisions resolve to these variables. Never hardcode below.
+   ========================================================================= */
+
+:root {
+  /* ---- Palette: crimson walls, gold leaf, warm cream ---- */
+  --crimson-900: #2c0606;
+  --crimson-800: #3d0a0a;
+  --crimson-700: #4a0f0f;   /* primary wall crimson */
+  --crimson-600: #5a1414;
+  --crimson-500: #6e1c1c;
+  --crimson-400: #8c2a2a;
+
+  --gold-100: #fff4d6;
+  --gold-200: #f7e3a8;
+  --gold-300: #ecd079;
+  --gold-400: #d4af37;       /* primary gold leaf */
+  --gold-500: #b8902a;
+  --gold-600: #8a6a1c;
+  --gold-glow: #ffcf5a;      /* hot ember / lantern glow */
+
+  --cream-100: #fbf6e9;
+  --cream-200: #f6ecd6;      /* primary cream */
+  --cream-300: #ecdcb8;
+  --cream-dim: #cbb988;
+
+  --ember: #ff9a3c;
+  --ember-deep: #c8841f;
+  --incense-tip: #ff5a2a;    /* glowing incense ember */
+
+  --ink: #1a0808;            /* near-black warm */
+  --shadow: rgba(0, 0, 0, 0.55);
+
+  /* semantic */
+  --bg-deep: var(--crimson-900);
+  --bg-wall: var(--crimson-700);
+  --text: var(--cream-200);
+  --text-dim: var(--cream-dim);
+  --text-gold: var(--gold-300);
+  --accent: var(--gold-400);
+  --line: rgba(212, 175, 55, 0.35);
+
+  /* ---- Gold gradient (recurring leaf effect) ---- */
+  --grad-gold: linear-gradient(
+    160deg,
+    var(--gold-200) 0%,
+    var(--gold-400) 38%,
+    var(--gold-500) 62%,
+    var(--gold-300) 100%
+  );
+  --grad-gold-text: linear-gradient(175deg, #fff4d6, #ecd079 35%, #b8902a 70%, #ecd079);
+
+  /* ---- Typography ---- */
+  --font-display: "Noto Serif", "Be Vietnam Pro", Georgia, "Times New Roman", serif;
+  --font-body: "Be Vietnam Pro", "Noto Sans", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+
+  --text-hero: clamp(2.75rem, 1rem + 6vw, 5.5rem);
+  --text-title: clamp(1.6rem, 1.1rem + 2vw, 2.6rem);
+  --text-lead: clamp(1.05rem, 0.95rem + 0.5vw, 1.3rem);
+  --text-base: clamp(0.95rem, 0.9rem + 0.2vw, 1.05rem);
+  --text-small: 0.85rem;
+  --text-tiny: 0.75rem;
+
+  /* ---- Spacing scale ---- */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.5rem;
+  --space-6: 2rem;
+  --space-7: 3rem;
+  --space-8: 4rem;
+  --space-9: 6rem;
+
+  /* ---- Radii ---- */
+  --radius-sm: 6px;
+  --radius-md: 12px;
+  --radius-lg: 20px;
+  --radius-pill: 999px;
+
+  /* ---- Elevation / glow ---- */
+  --glow-gold: 0 0 24px rgba(255, 207, 90, 0.55), 0 0 60px rgba(212, 175, 55, 0.35);
+  --glow-ember: 0 0 18px rgba(255, 154, 60, 0.7), 0 0 40px rgba(200, 132, 31, 0.4);
+  --shadow-deep: 0 18px 50px -12px rgba(0, 0, 0, 0.75);
+  --shadow-card: 0 10px 30px -10px rgba(0, 0, 0, 0.6);
+
+  /* ---- Motion ---- */
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out-soft: cubic-bezier(0.65, 0, 0.35, 1);
+  --ease-sway: cubic-bezier(0.45, 0.05, 0.55, 0.95);
+  --dur-fast: 180ms;
+  --dur-base: 420ms;
+  --dur-slow: 900ms;
+
+  /* ---- Layout ---- */
+  --container: 1200px;
+  --dock-h: 92px;
+
+  /* ---- Z-index scale ---- */
+  --z-sky: 1;
+  --z-scenery: 2;
+  --z-altar: 3;
+  --z-incense: 5;
+  --z-bell: 4;
+  --z-particles: 6;
+  --z-lanterns-rise: 7;
+  --z-header: 50;
+  --z-dock: 60;
+  --z-panel: 80;
+  --z-toast: 100;
+}

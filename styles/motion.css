@@ -1,0 +1,96 @@
+/* =========================================================================
+   MOTION — keyframes + reduced-motion guards
+   Compositor-friendly properties only (transform / opacity / filter).
+   ========================================================================= */
+
+@keyframes breathe {
+  0%, 100% { transform: scale(1); filter: brightness(1); }
+  50%      { transform: scale(1.015); filter: brightness(1.08); }
+}
+
+@keyframes aura-pulse {
+  0%, 100% { opacity: 0.55; transform: scale(1); }
+  50%      { opacity: 0.9;  transform: scale(1.06); }
+}
+
+@keyframes sway {
+  0%, 100% { transform: rotate(-2.2deg); }
+  50%      { transform: rotate(2.2deg); }
+}
+
+@keyframes lantern-flicker {
+  0%, 100% { opacity: 0.85; filter: brightness(0.92); }
+  25%      { opacity: 1;    filter: brightness(1.12); }
+  60%      { opacity: 0.78; filter: brightness(0.85); }
+}
+
+@keyframes rise-fade {
+  0%   { opacity: 0; transform: translateY(0) scale(0.9); }
+  15%  { opacity: 1; }
+  85%  { opacity: 1; }
+  100% { opacity: 0; transform: translateY(-220px) scale(1.05); }
+}
+
+@keyframes ember-glow {
+  0%, 100% { opacity: 0.85; box-shadow: 0 0 8px var(--incense-tip), 0 0 16px var(--ember); }
+  50%      { opacity: 1;    box-shadow: 0 0 14px var(--incense-tip), 0 0 28px var(--ember); }
+}
+
+@keyframes float-up {
+  0%   { opacity: 0; transform: translateY(20px); }
+  10%  { opacity: 1; }
+  100% { opacity: 0; transform: translateY(-104vh); }
+}
+
+@keyframes drift {
+  0%, 100% { transform: translateX(0); }
+  50%      { transform: translateX(14px); }
+}
+
+@keyframes mote {
+  0%   { opacity: 0; transform: translate(0, 0) scale(0.6); }
+  20%  { opacity: 0.9; }
+  100% { opacity: 0; transform: translate(var(--mx, 20px), -120px) scale(1.1); }
+}
+
+@keyframes shimmer {
+  0%   { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+@keyframes bell-swing {
+  0%   { transform: rotate(0deg); }
+  18%  { transform: rotate(7deg); }
+  38%  { transform: rotate(-5deg); }
+  58%  { transform: rotate(3deg); }
+  78%  { transform: rotate(-1.5deg); }
+  100% { transform: rotate(0deg); }
+}
+
+@keyframes reveal-up {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes toast-in {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.reveal {
+  opacity: 0;
+  animation: reveal-up var(--dur-slow) var(--ease-out-expo) forwards;
+}
+
+/* ---- Reduced motion: disable all decorative animation ---- */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+  .reveal { opacity: 1; }
+}

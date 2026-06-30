@@ -1,0 +1,206 @@
+/* =========================================================================
+   SCENE — header, roofline, atmosphere, altar layout
+   ========================================================================= */
+
+/* ---------- Header ---------- */
+.site-header {
+  position: relative;
+  z-index: var(--z-header);
+}
+.roofline {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: clamp(54px, 8.5vw, 116px);
+  pointer-events: none;
+  opacity: 0.92;
+}
+.roofline svg { width: 100%; height: 100%; display: block; }
+
+.header-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  padding-top: clamp(64px, 10vw, 118px);
+  padding-bottom: var(--space-4);
+  position: relative;
+}
+.brand { display: flex; align-items: center; gap: var(--space-4); }
+.brand-mark {
+  font-family: var(--font-display);
+  font-size: clamp(1.8rem, 4.5vw, 2.8rem);
+  color: var(--gold-400);
+  line-height: 1;
+  text-shadow: var(--glow-gold);
+}
+.brand-text { display: flex; flex-direction: column; gap: 2px; }
+.brand-title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: var(--text-title);
+  line-height: 1.05;
+}
+
+.header-tools { display: flex; gap: var(--space-2); }
+
+/* ---------- The scene stage ---------- */
+.scene {
+  position: relative;
+  min-height: calc(100dvh - 300px);
+  padding-bottom: calc(var(--dock-h) + var(--space-7));
+  overflow: hidden;
+  isolation: isolate;
+}
+
+/* ---------- Sky ---------- */
+.sky {
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 58%;
+  pointer-events: none;
+  z-index: var(--z-sky);
+  background:
+    radial-gradient(120% 90% at 50% -10%, rgba(140, 42, 42, 0.55), transparent 60%);
+}
+.moon {
+  position: absolute;
+  top: 5%;
+  right: 11%;
+  width: clamp(70px, 11vw, 130px);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: radial-gradient(circle at 38% 36%, #fff6d6, #ecd079 46%, rgba(212, 175, 55, 0));
+  filter: blur(0.5px);
+  opacity: 0.85;
+  animation: aura-pulse 9s ease-in-out infinite;
+}
+.stars {
+  position: absolute;
+  inset: 0;
+  background-image:
+    radial-gradient(1.5px 1.5px at 12% 18%, rgba(255, 240, 200, 0.9), transparent),
+    radial-gradient(1.5px 1.5px at 28% 32%, rgba(255, 240, 200, 0.7), transparent),
+    radial-gradient(1px 1px at 44% 12%, rgba(255, 240, 200, 0.8), transparent),
+    radial-gradient(2px 2px at 62% 26%, rgba(255, 240, 200, 0.6), transparent),
+    radial-gradient(1px 1px at 78% 16%, rgba(255, 240, 200, 0.85), transparent),
+    radial-gradient(1.5px 1.5px at 88% 34%, rgba(255, 240, 200, 0.7), transparent),
+    radial-gradient(1px 1px at 36% 44%, rgba(255, 240, 200, 0.5), transparent);
+  opacity: 0.8;
+  animation: aura-pulse 7s ease-in-out infinite;
+}
+
+/* ---------- Drifting motes (dust / embers) ---------- */
+.motes {
+  position: absolute;
+  inset: 0;
+  z-index: var(--z-particles);
+  pointer-events: none;
+  overflow: hidden;
+}
+.mote {
+  position: absolute;
+  bottom: -12px;
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 222, 150, 0.95), rgba(255, 200, 120, 0));
+  animation: mote linear infinite;
+}
+
+/* ---------- Smoke canvas ---------- */
+.smoke-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: var(--z-incense);
+  pointer-events: none;
+}
+
+/* ---------- Hanging lanterns ---------- */
+.hang {
+  position: absolute;
+  top: 1%;
+  z-index: var(--z-scenery);
+  display: flex;
+  flex-direction: column;
+  gap: clamp(16px, 3.5vh, 52px);
+  align-items: center;
+}
+.hang-left { left: clamp(1%, 4vw, 7%); }
+.hang-right { right: clamp(1%, 4vw, 7%); }
+.hanging-lantern {
+  width: clamp(42px, 6.5vw, 74px);
+  height: auto;
+  transform-origin: top center;
+  animation: sway 5.5s var(--ease-sway) infinite;
+  animation-delay: var(--sway-d, 0s);
+  filter: drop-shadow(0 0 12px rgba(255, 140, 50, 0.45));
+}
+
+/* ---------- Altar ---------- */
+.altar-wrap {
+  position: relative;
+  z-index: var(--z-altar);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-3);
+  padding-top: var(--space-5);
+}
+.greeting {
+  text-align: center;
+  max-width: 38ch;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2);
+}
+.greeting .divider { width: 100%; }
+.lotus-mini { width: 34px; height: 22px; }
+.greeting-text {
+  font-family: var(--font-display);
+  font-size: var(--text-title);
+  font-weight: 600;
+  letter-spacing: 0.01em;
+}
+.greeting-sub { font-size: var(--text-base); max-width: 46ch; }
+
+.buddha-stage {
+  position: relative;
+  width: clamp(280px, 58vw, 450px);
+}
+.burner-stage {
+  position: relative;
+  margin-top: -6%;
+  z-index: var(--z-incense);
+  width: clamp(220px, 44vw, 320px);
+}
+
+/* ---------- Bell ---------- */
+.bell-stage {
+  position: absolute;
+  right: clamp(1%, 6vw, 11%);
+  top: 40%;
+  z-index: var(--z-bell);
+  width: clamp(108px, 13vw, 156px);
+  cursor: pointer;
+  filter: drop-shadow(0 10px 18px rgba(0, 0, 0, 0.5));
+  transition: transform var(--dur-fast) var(--ease-out-expo);
+}
+.bell-stage:hover { transform: translateY(-2px) scale(1.02); }
+.bell-svg { width: 100%; height: auto; display: block; }
+
+/* ---------- Responsive ---------- */
+@media (max-width: 720px) {
+  .hang { gap: 14px; }
+  .hang .hanging-lantern:nth-child(2) { display: none; }
+  .bell-stage { top: auto; bottom: 30%; width: 92px; right: 3%; }
+  .greeting-sub { display: none; }
+  .brand-mark { display: none; }
+}
+@media (max-width: 420px) {
+  .hang-left .hanging-lantern:nth-child(1) { display: none; }
+}

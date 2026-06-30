@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="vi" data-lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#4a0f0f" />
+  <title>Chùa Hương Tâm — Nơi an lạc của tâm hồn</title>
+  <meta name="description" content="Chùa Hương Tâm — ghé thăm online, thắp hương, dâng lời cầu nguyện bình an và thành tựu trước tượng Phật." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&family=Noto+Serif:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet" />
+
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%AA%B7%3C/text%3E%3C/svg%3E" />
+
+  <link rel="stylesheet" href="styles/tokens.css" />
+  <link rel="stylesheet" href="styles/base.css" />
+  <link rel="stylesheet" href="styles/motion.css" />
+  <link rel="stylesheet" href="styles/scene.css" />
+  <link rel="stylesheet" href="styles/buddha.css" />
+  <link rel="stylesheet" href="styles/incense.css" />
+  <link rel="stylesheet" href="styles/bell.css" />
+  <link rel="stylesheet" href="styles/lanterns.css" />
+  <link rel="stylesheet" href="styles/controls.css" />
+  <link rel="stylesheet" href="styles/prayer.css" />
+</head>
+<body>
+
+  <!-- ============================================================
+       SVG SPRITE — repeated decorative art & UI icons
+       ============================================================ -->
+  <svg width="0" height="0" class="sprite" aria-hidden="true" focusable="false">
+    <defs>
+      <!-- Hanging lantern -->
+      <symbol id="ico-lantern" viewBox="0 0 120 170">
+        <defs>
+          <linearGradient id="g-lantern-body" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#b21d1d" /><stop offset="0.5" stop-color="#d6322f" /><stop offset="1" stop-color="#7c1212" />
+          </linearGradient>
+          <radialGradient id="g-lantern-glow" cx="0.5" cy="0.5" r="0.5">
+            <stop offset="0" stop-color="#ffe39a" /><stop offset="0.6" stop-color="#ffb24a" stop-opacity="0.7" /><stop offset="1" stop-color="#ff7a1a" stop-opacity="0" />
+          </radialGradient>
+          <linearGradient id="g-lantern-cap" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#f4dd86" /><stop offset="1" stop-color="#9c7620" />
+          </linearGradient>
+        </defs>
+        <line x1="60" y1="0" x2="60" y2="30" stroke="#caa23a" stroke-width="1.4" />
+        <path d="M30 32 L90 32 L82 44 L38 44 Z" fill="url(#g-lantern-cap)" />
+        <path d="M30 44 Q8 86 30 128 L90 128 Q112 86 90 44 Z" fill="url(#g-lantern-body)" />
+        <ellipse cx="60" cy="86" rx="30" ry="34" fill="url(#g-lantern-glow)" class="lantern-core" />
+        <path d="M30 44 Q22 86 30 128 M90 44 Q98 86 90 128 M60 46 L60 126" stroke="#5e0d0d" stroke-opacity="0.5" stroke-width="2" fill="none" />
+        <path d="M44 50 L76 50 M40 86 L80 86 M44 122 L76 122" stroke="#f4dd86" stroke-opacity="0.35" stroke-width="1.5" fill="none" />
+        <path d="M38 128 L82 128 L90 140 L30 140 Z" fill="url(#g-lantern-cap)" />
+        <path d="M60 140 L60 158 M54 144 L54 158 M66 144 L66 158" stroke="#d4af37" stroke-width="1.6" />
+        <circle cx="60" cy="162" r="3" fill="#d4af37" />
+      </symbol>
+
+      <!-- Lotus accent -->
+      <symbol id="ico-lotus" viewBox="0 0 100 60">
+        <defs>
+          <linearGradient id="g-lotus" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#f6e3a0" /><stop offset="1" stop-color="#c87f1c" />
+          </linearGradient>
+        </defs>
+        <g fill="url(#g-lotus)" stroke="#9c6a1c" stroke-opacity="0.4" stroke-width="0.8">
+          <path d="M50 8 Q42 30 50 52 Q58 30 50 8 Z" />
+          <path d="M50 14 Q30 26 26 50 Q48 44 50 30 Z" />
+          <path d="M50 14 Q70 26 74 50 Q52 44 50 30 Z" />
+          <path d="M50 22 Q18 30 12 50 Q40 44 50 36 Z" opacity="0.85" />
+          <path d="M50 22 Q82 30 88 50 Q60 44 50 36 Z" opacity="0.85" />
+        </g>
+      </symbol>
+
+      <!-- UI icons (stroke-based, currentColor) -->
+      <symbol id="ico-flame" viewBox="0 0 24 24"><path d="M12 2c1 4 5 5 5 10a5 5 0 0 1-10 0c0-2 1-3 2-4 .3 2 1.5 2.5 2 3 .2-3-1-6 1-9Z" fill="currentColor" /></symbol>
+      <symbol id="ico-hand" viewBox="0 0 24 24"><path d="M12 3v7M8.5 6.5v5M15.5 6.5v5M6 11c0 4 2.5 8 6 8s6-4 6-8" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" /></symbol>
+      <symbol id="ico-bell-ui" viewBox="0 0 24 24"><path d="M6 16a6 6 0 0 1 12 0M9.5 19a2.5 2.5 0 0 0 5 0M12 4v2" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" /></symbol>
+      <symbol id="ico-paper" viewBox="0 0 24 24"><path d="M7 3h7l4 4v14H7zM14 3v4h4M9 12h6M9 16h6" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" /></symbol>
+      <symbol id="ico-sound" viewBox="0 0 24 24"><path d="M4 9v6h4l5 4V5L8 9zM17 8a5 5 0 0 1 0 8M19.5 5.5a9 9 0 0 1 0 13" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" /></symbol>
+      <symbol id="ico-mute" viewBox="0 0 24 24"><path d="M4 9v6h4l5 4V5L8 9zM17 9l4 6M21 9l-4 6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" /></symbol>
+      <symbol id="ico-globe" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.7" /><path d="M3 12h18M12 3c3 3 3 15 0 18M12 3c-3 3-3 15 0 18" fill="none" stroke="currentColor" stroke-width="1.5" /></symbol>
+      <symbol id="ico-wall" viewBox="0 0 24 24"><path d="M4 5h16v14H4zM4 10h16M4 15h16M9 5v5M14 10v5M9 15v4" fill="none" stroke="currentColor" stroke-width="1.6" /></symbol>
+      <symbol id="ico-close" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" /></symbol>
+      <symbol id="ico-lantern-ui" viewBox="0 0 24 24"><path d="M9 4h6v3l2 5-2 6H9l-2-6 2-5zM12 2v2M11 21h2" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" /></symbol>
+    </defs>
+  </svg>
+
+  <!-- ============================================================
+       HEADER — pagoda roofline, title, controls
+       ============================================================ -->
+  <header class="site-header">
+    <div class="roofline" aria-hidden="true">
+      <svg viewBox="0 0 1200 140" preserveAspectRatio="xMidYMax meet">
+        <defs>
+          <linearGradient id="g-roof" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#3d0a0a" /><stop offset="0.5" stop-color="#2c0606" /><stop offset="1" stop-color="#1a0303" />
+          </linearGradient>
+          <linearGradient id="g-roof-edge" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#f4dd86" /><stop offset="1" stop-color="#b8902a" />
+          </linearGradient>
+        </defs>
+        <!-- tier 1 (wide) -->
+        <path d="M0 130 Q120 60 240 70 L320 40 Q380 18 440 38 L520 68 Q600 30 680 68 L760 38 Q820 18 880 40 L960 70 Q1080 60 1200 130 Z" fill="url(#g-roof)" />
+        <path d="M0 130 Q120 60 240 70 L320 40 Q380 18 440 38 L520 68 Q600 30 680 68 L760 38 Q820 18 880 40 L960 70 Q1080 60 1200 130" fill="none" stroke="url(#g-roof-edge)" stroke-width="3" />
+        <!-- upturned eave tips -->
+        <g fill="url(#g-roof-edge)">
+          <path d="M236 70 Q210 50 196 58 Q214 64 230 78 Z" />
+          <path d="M964 70 Q990 50 1004 58 Q986 64 970 78 Z" />
+        </g>
+        <!-- ridge ornament -->
+        <g fill="#d4af37">
+          <circle cx="600" cy="34" r="4" /><circle cx="560" cy="46" r="3" /><circle cx="640" cy="46" r="3" />
+        </g>
+      </svg>
+    </div>
+
+    <div class="header-inner container">
+      <div class="brand reveal" style="animation-delay:.1s">
+        <span class="brand-mark">寺</span>
+        <div class="brand-text">
+          <p class="eyebrow" data-i18n="brand.eyebrow">Chùa Online · Hương Tâm</p>
+          <h1 class="brand-title gold-text" data-i18n="brand.title">Chùa Hương Tâm</h1>
+        </div>
+      </div>
+
+      <div class="header-tools">
+        <button class="tool-btn" id="ambient-toggle" aria-pressed="false" type="button" data-i18n-title="tools.ambient">
+          <svg class="ic"><use href="#ico-mute" /></svg>
+          <span data-i18n="tools.ambient">Môi trường</span>
+        </button>
+        <button class="tool-btn" id="lang-toggle" type="button" data-i18n-title="tools.lang">
+          <svg class="ic"><use href="#ico-globe" /></svg>
+          <span id="lang-label">EN</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ============================================================
+       MAIN — the temple scene
+       ============================================================ -->
+  <main class="scene" id="scene">
+
+    <!-- sky for lanterns -->
+    <div class="sky" aria-hidden="true">
+      <div class="moon"></div>
+      <div class="stars"></div>
+    </div>
+
+    <!-- drifting dust motes -->
+    <div class="motes" id="motes" aria-hidden="true"></div>
+
+    <!-- floating lanterns released by the user -->
+    <div class="lanterns-rise" id="lanterns-rise" aria-hidden="true"></div>
+
+    <!-- smoke canvas over the altar -->
+    <canvas class="smoke-canvas" id="smoke" aria-hidden="true"></canvas>
+
+    <!-- left hanging lanterns -->
+    <div class="hang hang-left" aria-hidden="true">
+      <svg class="hanging-lantern" style="--sway-d:-6s"><use href="#ico-lantern" /></svg>
+      <svg class="hanging-lantern" style="--sway-d:-2s"><use href="#ico-lantern" /></svg>
+    </div>
+    <!-- right hanging lanterns -->
+    <div class="hang hang-right" aria-hidden="true">
+      <svg class="hanging-lantern" style="--sway-d:-4s"><use href="#ico-lantern" /></svg>
+      <svg class="hanging-lantern" style="--sway-d:-8s"><use href="#ico-lantern" /></svg>
+    </div>
+
+    <!-- altar & buddha -->
+    <div class="altar-wrap reveal">
+      <div class="greeting">
+        <span class="divider"><svg class="lotus-mini"><use href="#ico-lotus" /></svg></span>
+        <p class="greeting-text gold-text" data-i18n="greeting">Nam mô A Di Đà Phật</p>
+        <p class="lead greeting-sub" data-i18n="intro">Hãy thắp một nén hương, dâng lời nguyện — cầu bình an, thành tựu cho mình và người thương.</p>
+      </div>
+
+      <div class="buddha-stage">
+        <!-- ============ BUDDHA (inline, styled) ============ -->
+        <svg class="buddha" viewBox="0 0 420 580" role="img" aria-labelledby="buddha-cap">
+          <title id="buddha-cap" data-i18n="buddha.alt">Tượng Phật trên đài sen</title>
+          <defs>
+            <linearGradient id="g-body" x1="0.3" y1="0" x2="0.7" y2="1">
+              <stop offset="0" stop-color="#fff1c2" /><stop offset="0.42" stop-color="#ecd079" /><stop offset="0.78" stop-color="#c69a36" /><stop offset="1" stop-color="#9c7620" />
+            </linearGradient>
+            <linearGradient id="g-body-shade" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#e6c258" /><stop offset="1" stop-color="#8a6a1c" />
+            </linearGradient>
+            <linearGradient id="g-robe" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0" stop-color="#f2d778" stop-opacity="0.9" /><stop offset="1" stop-color="#9c7620" stop-opacity="0.6" />
+            </linearGradient>
+            <radialGradient id="g-halo" cx="0.5" cy="0.4" r="0.55">
+              <stop offset="0" stop-color="#fff6cf" stop-opacity="0.95" /><stop offset="0.4" stop-color="#e7bf4e" stop-opacity="0.55" /><stop offset="0.75" stop-color="#d4af37" stop-opacity="0.12" /><stop offset="1" stop-color="#d4af37" stop-opacity="0" />
+            </radialGradient>
+            <linearGradient id="g-throne-top" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fbeaa8" /><stop offset="1" stop-color="#b8902a" /></linearGradient>
+            <linearGradient id="g-throne-base" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#c69a36" /><stop offset="1" stop-color="#6e4f14" /></linearGradient>
+            <linearGradient id="g-petal" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fbeaa8" /><stop offset="0.6" stop-color="#e7bf4e" /><stop offset="1" stop-color="#a87a1c" /></linearGradient>
+          </defs>
+
+          <!-- aura glow -->
+          <circle class="b-halo" cx="210" cy="215" r="210" fill="url(#g-halo)" />
+          <circle cx="210" cy="205" r="142" fill="none" stroke="#e7c14e" stroke-opacity="0.3" stroke-width="2" />
+          <circle cx="210" cy="205" r="130" fill="none" stroke="#d4af37" stroke-opacity="0.55" stroke-width="3" />
+          <!-- radiating rays -->
+          <g class="b-rays" stroke="#e7c14e" stroke-opacity="0.35" stroke-width="2" stroke-linecap="round">
+            <line x1="210" y1="40" x2="210" y2="62" /><line x1="320" y1="80" x2="304" y2="98" /><line x1="370" y1="205" x2="348" y2="205" />
+            <line x1="320" y1="330" x2="304" y2="314" /><line x1="100" y1="80" x2="116" y2="98" /><line x1="50" y1="205" x2="72" y2="205" />
+            <line x1="100" y1="330" x2="116" y2="314" />
+          </g>
+
+          <!-- lotus throne -->
+          <g class="b-throne">
+            <ellipse cx="210" cy="432" rx="150" ry="32" fill="url(#g-throne-top)" />
+            <g fill="url(#g-petal)" stroke="#9c6a1c" stroke-opacity="0.35" stroke-width="0.9">
+              <path d="M210 444 Q200 500 210 528 Q220 500 210 444 Z" />
+              <path d="M210 444 Q170 492 168 524 Q200 506 210 470 Z" />
+              <path d="M210 444 Q250 492 252 524 Q220 506 210 470 Z" />
+              <path d="M210 444 Q138 484 126 514 Q172 498 200 470 Z" opacity="0.92" />
+              <path d="M210 444 Q282 484 294 514 Q248 498 220 470 Z" opacity="0.92" />
+              <path d="M210 444 Q104 478 86 502 Q150 490 192 466 Z" opacity="0.8" />
+              <path d="M210 444 Q316 478 334 502 Q270 490 228 466 Z" opacity="0.8" />
+            </g>
+            <path d="M86 502 Q210 540 334 502 L320 524 Q210 556 100 524 Z" fill="url(#g-throne-base)" />
+          </g>
+
+          <!-- figure -->
+          <g class="b-figure">
+            <!-- crossed legs -->
+            <path d="M120 442 Q150 360 210 358 Q270 360 300 442 Q300 470 210 480 Q120 470 120 442 Z" fill="url(#g-body)" />
+            <path d="M150 432 Q210 456 270 432 M132 462 Q210 476 288 462" fill="none" stroke="#9c7620" stroke-opacity="0.4" stroke-width="2" />
+            <!-- hands in lap -->
+            <g class="b-hands">
+              <path d="M158 410 Q210 392 262 410 Q262 432 210 436 Q158 432 158 410 Z" fill="url(#g-body-shade)" />
+              <path d="M176 414 Q210 404 244 414" fill="none" stroke="#7a5a14" stroke-opacity="0.55" stroke-width="2" />
+              <ellipse cx="210" cy="412" rx="14" ry="7" fill="#9c7620" opacity="0.5" />
+            </g>
+            <!-- torso -->
+            <path d="M150 372 Q156 262 210 252 Q264 262 270 372 Q270 402 210 410 Q150 402 150 372 Z" fill="url(#g-body)" />
+            <!-- monastic sash -->
+            <path d="M172 262 Q206 300 248 272 Q232 360 210 402 Q188 360 172 262 Z" fill="url(#g-robe)" />
+            <path d="M194 252 Q210 306 226 252" fill="none" stroke="#9c7620" stroke-opacity="0.6" stroke-width="2.5" />
+            <path d="M164 300 Q210 330 256 300 M170 330 Q210 356 250 330" fill="none" stroke="#9c7620" stroke-opacity="0.35" stroke-width="2" />
+            <!-- neck -->
+            <path d="M196 210 L196 250 Q210 258 224 250 L224 210 Z" fill="url(#g-body)" />
+            <path d="M198 232 Q210 238 222 232" fill="none" stroke="#9c7620" stroke-opacity="0.4" stroke-width="1.5" />
+            <!-- head -->
+            <circle cx="210" cy="158" r="55" fill="url(#g-body)" />
+            <!-- ushnisha -->
+            <path d="M186 112 Q210 74 234 112 Q232 126 210 128 Q188 126 186 112 Z" fill="url(#g-body)" />
+            <circle cx="210" cy="100" r="9" fill="url(#g-body-shade)" />
+            <!-- hair curls -->
+            <g fill="#b8902a" opacity="0.7">
+              <circle cx="176" cy="120" r="4" /><circle cx="190" cy="112" r="4" /><circle cx="206" cy="108" r="4" /><circle cx="222" cy="110" r="4" /><circle cx="236" cy="118" r="4" />
+              <circle cx="168" cy="134" r="4" /><circle cx="184" cy="128" r="4" /><circle cx="200" cy="124" r="4" /><circle cx="216" cy="124" r="4" /><circle cx="232" cy="128" r="4" /><circle cx="248" cy="134" r="4" />
+            </g>
+            <!-- ears -->
+            <path d="M158 150 Q148 180 160 198 Q172 194 168 176 Q165 160 158 150 Z" fill="url(#g-body)" />
+            <path d="M262 150 Q272 180 260 198 Q248 194 252 176 Q255 160 262 150 Z" fill="url(#g-body)" />
+            <!-- face -->
+            <g class="b-face" fill="none" stroke="#7a4f12" stroke-opacity="0.75" stroke-width="2" stroke-linecap="round">
+              <circle cx="210" cy="134" r="3.4" fill="#a85a14" stroke="none" />
+              <path d="M186 146 Q196 142 206 146" /><path d="M214 146 Q224 142 234 146" />
+              <path d="M184 160 Q195 166 206 160" /><path d="M214 160 Q225 166 236 160" />
+              <path d="M210 150 Q206 168 210 176 Q214 178 218 174" />
+              <path d="M198 184 Q210 192 222 184" />
+            </g>
+          </g>
+
+          <!-- ======================================================
+               OPTIONAL PHOTO — a transparent Buddha PNG.
+               Drop a file at assets/buddha.png and it replaces the
+               drawn figure above automatically (see buddha.css +
+               main.js). Tune x/y/width/height to seat it on the lotus.
+               ====================================================== -->
+          <image class="b-photo" href="assets/buddha.png"
+                 x="60" y="45" width="300" height="445"
+                 preserveAspectRatio="xMidYMax meet" />
+        </svg>
+      </div>
+
+      <!-- ============ INCENSE BURNER (inline, interactive) ============ -->
+      <div class="burner-stage">
+        <div class="burner" id="burner" role="button" tabindex="0" data-i18n-title="burner.action" aria-label="Thắp hương">
+          <svg viewBox="0 0 300 210" class="burner-svg" aria-hidden="true">
+            <defs>
+              <linearGradient id="g-bronze" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0" stop-color="#e0a93c" /><stop offset="0.45" stop-color="#b9762a" /><stop offset="1" stop-color="#5e3811" />
+              </linearGradient>
+              <linearGradient id="g-bronze-top" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f4dd86" /><stop offset="1" stop-color="#a87a1c" /></linearGradient>
+              <radialGradient id="g-ember" cx="0.5" cy="0.5" r="0.5"><stop offset="0" stop-color="#fff0c0" /><stop offset="0.4" stop-color="#ff7a1a" /><stop offset="1" stop-color="#c02810" stop-opacity="0" /></radialGradient>
+            </defs>
+            <!-- ear rings -->
+            <circle cx="38" cy="104" r="17" fill="none" stroke="url(#g-bronze)" stroke-width="6" />
+            <circle cx="262" cy="104" r="17" fill="none" stroke="url(#g-bronze)" stroke-width="6" />
+            <!-- legs -->
+            <path d="M78 150 Q74 182 88 190 L100 190 Q98 168 100 150 Z" fill="url(#g-bronze)" />
+            <path d="M210 150 Q208 168 210 190 L222 190 Q236 182 222 150 Z" fill="url(#g-bronze)" />
+            <path d="M138 160 Q136 188 150 196 L162 196 Q160 178 162 160 Z" fill="url(#g-bronze)" opacity="0.92" />
+            <!-- body -->
+            <path d="M54 96 Q58 168 150 172 Q242 168 246 96 Q230 86 150 86 Q70 86 54 96 Z" fill="url(#g-bronze)" />
+            <!-- ornamental bands -->
+            <path d="M56 120 Q150 138 244 120" fill="none" stroke="#f4dd86" stroke-opacity="0.55" stroke-width="3" />
+            <path d="M58 150 Q150 166 242 150" fill="none" stroke="#7a4f12" stroke-opacity="0.6" stroke-width="2.5" />
+            <g fill="#f4dd86" opacity="0.6"><circle cx="110" cy="130" r="3" /><circle cx="150" cy="134" r="3.5" /><circle cx="190" cy="130" r="3" /></g>
+            <!-- rim + ash bed -->
+            <ellipse cx="150" cy="96" rx="96" ry="20" fill="url(#g-bronze-top)" />
+            <ellipse cx="150" cy="92" rx="80" ry="12" fill="#2a1407" />
+            <ellipse cx="150" cy="90" rx="80" ry="12" fill="none" stroke="#5e3811" stroke-width="1.5" />
+            <!-- incense sticks -->
+            <g class="sticks" stroke-linecap="round">
+              <line class="stick" x1="120" y1="92" x2="116" y2="6" stroke="#e8d9a8" stroke-width="2.6" />
+              <line class="stick" x1="140" y1="90" x2="138" y2="2" stroke="#e8d9a8" stroke-width="2.6" />
+              <line class="stick" x1="160" y1="89" x2="161" y2="0" stroke="#e8d9a8" stroke-width="2.6" />
+              <line class="stick" x1="180" y1="90" x2="183" y2="3" stroke="#e8d9a8" stroke-width="2.6" />
+              <circle class="tip" cx="116" cy="6" r="5" fill="url(#g-ember)" />
+              <circle class="tip" cx="138" cy="2" r="5" fill="url(#g-ember)" />
+              <circle class="tip" cx="161" cy="0" r="5" fill="url(#g-ember)" />
+              <circle class="tip" cx="183" cy="3" r="5" fill="url(#g-ember)" />
+            </g>
+          </svg>
+          <span class="burner-hint" data-i18n="burner.hint">Nhấp để thắp hương</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ TEMPLE BELL (inline, interactive) ============ -->
+    <div class="bell-stage" id="bell" role="button" tabindex="0" data-i18n-title="bell.action" aria-label="Gõ chuông">
+      <svg viewBox="0 0 180 260" class="bell-svg" aria-hidden="true">
+        <defs>
+          <linearGradient id="g-bell" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#dba94e" /><stop offset="0.5" stop-color="#9c6a24" /><stop offset="1" stop-color="#4f3210" /></linearGradient>
+          <linearGradient id="g-beam" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#5e3811" /><stop offset="1" stop-color="#2a1407" /></linearGradient>
+        </defs>
+        <!-- hanging beam -->
+        <rect x="30" y="12" width="120" height="14" rx="4" fill="url(#g-beam)" />
+        <rect x="30" y="12" width="120" height="14" rx="4" fill="none" stroke="#caa23a" stroke-opacity="0.5" />
+        <!-- ropes -->
+        <line x1="66" y1="26" x2="66" y2="58" stroke="#7c4a1c" stroke-width="3" />
+        <line x1="114" y1="26" x2="114" y2="58" stroke="#7c4a1c" stroke-width="3" />
+        <!-- bell crown loop -->
+        <path d="M84 50 Q90 40 96 50" fill="none" stroke="#9c6a24" stroke-width="4" />
+        <g class="bell-body">
+          <path d="M58 58 Q58 60 54 64 Q40 96 48 150 Q48 168 60 176 L120 176 Q132 168 132 150 Q140 96 126 64 Q122 60 122 58 Q120 52 90 52 Q60 52 58 58 Z" fill="url(#g-bell)" />
+          <path d="M50 110 Q90 124 130 110 M52 138 Q90 150 128 138" fill="none" stroke="#f4dd86" stroke-opacity="0.45" stroke-width="2.5" />
+          <circle cx="90" cy="120" r="5" fill="#f4dd86" opacity="0.6" />
+          <!-- mouth rim -->
+          <ellipse cx="90" cy="176" rx="42" ry="8" fill="#3a2410" />
+          <!-- clapper -->
+          <path d="M90 176 L90 196" stroke="#3a2410" stroke-width="3" />
+          <circle cx="90" cy="200" r="7" fill="url(#g-bell)" />
+        </g>
+        <!-- striker (suspended log) -->
+        <g class="striker">
+          <line x1="150" y1="20" x2="150" y2="60" stroke="#7c4a1c" stroke-width="3" />
+          <ellipse cx="150" cy="120" rx="13" ry="34" fill="url(#g-beam)" stroke="#caa23a" stroke-opacity="0.4" />
+        </g>
+      </svg>
+      <span class="bell-hint" data-i18n="bell.hint">Gõ chuông</span>
+    </div>
+  </main>
+
+  <!-- ============================================================
+       DOCK — primary actions
+       ============================================================ -->
+  <footer class="dock">
+    <div class="dock-inner container">
+      <button class="action" data-action="incense" type="button">
+        <svg class="ic"><use href="#ico-flame" /></svg>
+        <span data-i18n="nav.incense">Thắp hương</span>
+      </button>
+      <button class="action action-primary" data-action="pray" type="button">
+        <svg class="ic"><use href="#ico-hand" /></svg>
+        <span data-i18n="nav.pray">Cầu nguyện</span>
+      </button>
+      <button class="action" data-action="bell" type="button">
+        <svg class="ic"><use href="#ico-bell-ui" /></svg>
+        <span data-i18n="nav.bell">Gõ chuông</span>
+      </button>
+      <button class="action" data-action="lantern" type="button">
+        <svg class="ic"><use href="#ico-lantern-ui" /></svg>
+        <span data-i18n="nav.lantern">Thả đèn</span>
+      </button>
+      <button class="action" data-action="wishes" type="button">
+        <svg class="ic"><use href="#ico-wall" /></svg>
+        <span data-i18n="nav.wishes">Tâm thư</span>
+        <span class="badge" id="wish-count" hidden>0</span>
+      </button>
+    </div>
+  </footer>
+
+  <!-- ============================================================
+       PRAYER PANEL
+       ============================================================ -->
+  <div class="overlay" id="prayer-overlay" hidden>
+    <div class="panel panel-prayer" role="dialog" aria-modal="true" aria-labelledby="prayer-title">
+      <button class="panel-close" data-close type="button" aria-label="Đóng"><svg class="ic"><use href="#ico-close" /></svg></button>
+      <div class="panel-head">
+        <span class="divider"><svg class="lotus-mini"><use href="#ico-lotus" /></svg></span>
+        <h2 class="panel-title gold-text" id="prayer-title" data-i18n="prayer.title">Viết tâm nguyện</h2>
+        <p class="panel-sub" data-i18n="prayer.hint">Lời nguyện sẽ được dâng lên Đức Phật và lưu lại nơi đây.</p>
+      </div>
+      <form class="prayer-form" id="prayer-form">
+        <label class="field">
+          <span class="field-label" data-i18n="prayer.label">Tâm nguyện của bạn</span>
+          <textarea id="prayer-text" name="prayer" rows="4" maxlength="280" required
+            data-i18n-placeholder="prayer.placeholder" placeholder="Viết lời cầu bình an, thành tựu..."></textarea>
+          <span class="field-count"><span id="prayer-count">0</span>/280</span>
+        </label>
+        <label class="field field-inline">
+          <span class="field-label" data-i18n="prayer.name">Tên (tùy chọn)</span>
+          <input id="prayer-name" name="name" type="text" maxlength="32" autocomplete="off"
+            data-i18n-placeholder="prayer.name-ph" placeholder="Một người thành tâm" />
+        </label>
+        <div class="intent-row" id="intent-row">
+          <button type="button" class="chip is-active" data-intent="peace" data-i18n="intent.peace">Bình an</button>
+          <button type="button" class="chip" data-intent="success" data-i18n="intent.success">Thành tựu</button>
+          <button type="button" class="chip" data-intent="health" data-i18n="intent.health">Sức khỏe</button>
+          <button type="button" class="chip" data-intent="love" data-i18n="intent.love">Tình duyên</button>
+        </div>
+        <div class="form-actions">
+          <button type="button" class="btn-ghost" data-close data-i18n="prayer.cancel">Đóng</button>
+          <button type="submit" class="btn-primary" data-i18n="prayer.submit">Dâng lời nguyện</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ============================================================
+       WISH WALL PANEL
+       ============================================================ -->
+  <div class="overlay" id="wishes-overlay" hidden>
+    <div class="panel panel-wishes" role="dialog" aria-modal="true" aria-labelledby="wishes-title">
+      <button class="panel-close" data-close type="button" aria-label="Đóng"><svg class="ic"><use href="#ico-close" /></svg></button>
+      <div class="panel-head">
+        <span class="divider"><svg class="lotus-mini"><use href="#ico-lotus" /></svg></span>
+        <h2 class="panel-title gold-text" id="wishes-title" data-i18n="wishes.title">Bức Tâm Thư</h2>
+        <p class="panel-sub" data-i18n="wishes.sub">Những lời nguyện được dâng lên nơi chùa Hương Tâm.</p>
+      </div>
+      <div class="wish-list" id="wish-list" aria-live="polite"></div>
+      <div class="wish-empty" id="wish-empty" data-i18n="wishes.empty">Chưa có tâm nguyện nào.</div>
+      <div class="form-actions">
+        <button type="button" class="btn-ghost" data-close data-i18n="prayer.cancel">Đóng</button>
+        <button type="button" class="btn-danger" id="wishes-clear" data-i18n="wishes.clear">Xóa tất cả</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- toast -->
+  <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+
+  <!-- scripts (module order matters; defer not needed at end of body) -->
+  <script src="scripts/audio.js"></script>
+  <script src="scripts/store.js"></script>
+  <script src="scripts/i18n.js"></script>
+  <script src="scripts/bell.js"></script>
+  <script src="scripts/incense.js"></script>
+  <script src="scripts/lanterns.js"></script>
+  <script src="scripts/prayer.js"></script>
+  <script src="scripts/scene.js"></script>
+  <script src="scripts/main.js"></script>
+</body>
+</html>

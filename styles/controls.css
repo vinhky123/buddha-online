@@ -1,0 +1,155 @@
+/* =========================================================================
+   CONTROLS — dock, action buttons, header tools, toast
+   ========================================================================= */
+
+/* ---------- Header tools ---------- */
+.tool-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: 0.5rem 0.85rem;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--line);
+  background: rgba(74, 15, 15, 0.55);
+  color: var(--text);
+  font-size: var(--text-small);
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  backdrop-filter: blur(4px);
+  transition: all var(--dur-fast) var(--ease-out-expo);
+}
+.tool-btn:hover {
+  border-color: var(--gold-400);
+  color: var(--gold-100);
+  background: rgba(110, 28, 28, 0.6);
+  transform: translateY(-1px);
+}
+.tool-btn[aria-pressed="true"] {
+  border-color: var(--gold-400);
+  color: var(--gold-100);
+  box-shadow: inset 0 0 0 1px var(--gold-400), 0 0 14px rgba(212, 175, 55, 0.3);
+}
+.tool-btn .ic { width: 18px; height: 18px; color: var(--gold-300); }
+
+/* ---------- Dock ---------- */
+.dock {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: var(--z-dock);
+  padding: var(--space-3) 0 calc(var(--space-3) + env(safe-area-inset-bottom));
+  background: linear-gradient(180deg, rgba(44, 6, 6, 0) 0%, rgba(30, 4, 4, 0.85) 40%, rgba(20, 3, 3, 0.96) 100%);
+  backdrop-filter: blur(10px);
+  border-top: 1px solid var(--line);
+}
+.dock::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gold-400), transparent);
+  opacity: 0.6;
+}
+.dock-inner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(var(--space-2), 2vw, var(--space-4));
+  flex-wrap: wrap;
+}
+
+/* ---------- Action buttons ---------- */
+.action {
+  position: relative;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  min-width: clamp(60px, 16vw, 88px);
+  padding: var(--space-3) var(--space-2);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--line);
+  background: rgba(60, 10, 10, 0.5);
+  color: var(--text);
+  font-size: var(--text-tiny);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  transition: all var(--dur-fast) var(--ease-out-expo);
+}
+.action .ic {
+  width: 26px;
+  height: 26px;
+  color: var(--gold-300);
+  transition: transform var(--dur-fast) var(--ease-out-expo), color var(--dur-fast) ease;
+}
+.action:hover {
+  border-color: var(--gold-400);
+  background: rgba(90, 20, 20, 0.6);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 22px -8px rgba(0, 0, 0, 0.7);
+}
+.action:hover .ic { color: var(--gold-100); transform: scale(1.12); }
+.action:active { transform: translateY(-1px) scale(0.98); }
+
+.action-primary {
+  background: var(--grad-gold);
+  color: var(--crimson-900);
+  border-color: var(--gold-300);
+  box-shadow: var(--glow-gold);
+}
+.action-primary .ic { color: var(--crimson-800); }
+.action-primary:hover {
+  background: var(--grad-gold);
+  color: var(--crimson-900);
+  filter: brightness(1.08);
+}
+
+.badge {
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  min-width: 20px;
+  height: 20px;
+  padding: 0 5px;
+  border-radius: var(--radius-pill);
+  background: var(--crimson-500);
+  color: var(--gold-100);
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 20px;
+  text-align: center;
+  border: 1px solid var(--gold-400);
+}
+
+/* ---------- Toast ---------- */
+.toast {
+  position: fixed;
+  left: 50%;
+  bottom: calc(var(--dock-h) + var(--space-4));
+  transform: translateX(-50%) translateY(12px);
+  z-index: var(--z-toast);
+  max-width: min(92vw, 460px);
+  padding: var(--space-3) var(--space-5);
+  border-radius: var(--radius-pill);
+  background: linear-gradient(180deg, rgba(74, 15, 15, 0.95), rgba(44, 6, 6, 0.95));
+  border: 1px solid var(--gold-400);
+  box-shadow: var(--shadow-deep), var(--glow-gold);
+  color: var(--cream-100);
+  font-size: var(--text-small);
+  text-align: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--dur-base) var(--ease-out-expo),
+              transform var(--dur-base) var(--ease-out-expo);
+}
+.toast.is-show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+@media (max-width: 560px) {
+  .action span { font-size: 10px; }
+  .action .ic { width: 22px; height: 22px; }
+  .tool-btn span:not(#lang-label) { display: none; }
+}

@@ -1,0 +1,52 @@
+/* =========================================================================
+   BUDDHA — the centerpiece. Aura, halo, gentle breathing, radiating rays.
+   ========================================================================= */
+
+.buddha {
+  width: 100%;
+  height: auto;
+  display: block;
+  filter: drop-shadow(0 14px 34px rgba(0, 0, 0, 0.55));
+  animation: breathe 7s var(--ease-in-out-soft) infinite;
+  transform-origin: 50% 70%;
+}
+
+/* soft aura pulsing behind the figure */
+.b-halo {
+  transform-origin: 210px 215px;
+  transform-box: fill-box;
+  animation: aura-pulse 6.5s ease-in-out infinite;
+}
+
+/* radiating light rays — slightly offset rhythm from halo */
+.b-rays {
+  transform-origin: 210px 205px;
+  transform-box: fill-box;
+  animation: aura-pulse 9s ease-in-out infinite;
+  animation-delay: -1.5s;
+}
+
+/* lotus throne gets a subtle independent shimmer */
+.b-throne {
+  transform-origin: 210px 470px;
+  transform-box: fill-box;
+  animation: breathe 9s var(--ease-in-out-soft) infinite;
+}
+
+/* face details stay crisp (no blur) */
+.b-face { filter: drop-shadow(0 0 0.4px rgba(0, 0, 0, 0.25)); }
+
+/* ---- Optional Buddha photo (transparent PNG at assets/buddha.png) ----
+   Hidden by default; main.js adds .has-photo to <svg.buddha> once the
+   file loads successfully, which hides the drawn figure and shows the
+   photo. If the file is absent/404, the drawn Buddha simply remains. */
+.buddha .b-photo { display: none; }
+.buddha.has-photo .b-photo { display: block; }
+.buddha.has-photo .b-figure { display: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  .buddha,
+  .b-halo,
+  .b-rays,
+  .b-throne { animation: none; }
+}

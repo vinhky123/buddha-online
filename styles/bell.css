@@ -1,0 +1,51 @@
+/* =========================================================================
+   BELL — swing on strike, striker recoil
+   ========================================================================= */
+
+.bell-body {
+  transform-origin: 90px 56px;
+  transform-box: fill-box;
+  transition: transform 80ms var(--ease-out-expo);
+}
+.bell-svg.is-ringing .bell-body {
+  animation: bell-swing 1100ms var(--ease-out-expo);
+  transform-origin: 90px 56px;
+  transform-box: fill-box;
+}
+
+.striker {
+  transform-origin: 150px 20px;
+  transform-box: fill-box;
+  transition: transform 120ms var(--ease-out-expo);
+}
+.bell-svg.is-ringing .striker {
+  animation: striker-hit 420ms var(--ease-out-expo);
+}
+@keyframes striker-hit {
+  0% { transform: rotate(0deg); }
+  35% { transform: rotate(-16deg); }
+  100% { transform: rotate(0deg); }
+}
+
+/* ripple ring emitted from the bell on strike */
+.bell-ripple {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 20px;
+  height: 20px;
+  margin: -10px 0 0 -10px;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 220, 140, 0.7);
+  pointer-events: none;
+  animation: bell-ripple 900ms var(--ease-out-expo) forwards;
+}
+@keyframes bell-ripple {
+  0% { opacity: 0.8; transform: scale(0.4); }
+  100% { opacity: 0; transform: scale(7); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bell-svg.is-ringing .bell-body,
+  .bell-svg.is-ringing .striker { animation: none; }
+}

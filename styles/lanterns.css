@@ -1,0 +1,47 @@
+/* =========================================================================
+   LANTERNS — hanging (decorative) + released (user action)
+   ========================================================================= */
+
+/* Lantern core glow flickers (lives inside the sprite symbol) */
+.lantern-core {
+  transform-origin: center;
+  transform-box: fill-box;
+  animation: lantern-flicker 3.2s ease-in-out infinite;
+}
+
+/* ---------- Released lanterns rising into the sky ---------- */
+.lanterns-rise {
+  position: absolute;
+  inset: 0;
+  z-index: var(--z-lanterns-rise);
+  pointer-events: none;
+  overflow: hidden;
+}
+.rising-lantern {
+  position: absolute;
+  bottom: -140px;
+  width: clamp(40px, 6vw, 64px);
+  height: auto;
+  filter: drop-shadow(0 0 16px rgba(255, 150, 60, 0.6));
+  animation: lantern-rise linear forwards;
+  will-change: transform, opacity;
+}
+
+/* slow drift upward with a gentle horizontal sway via nested keyframe */
+@keyframes lantern-rise {
+  0% { opacity: 0; transform: translate(0, 0) scale(0.7); }
+  8% { opacity: 1; }
+  25% { transform: translate(calc(var(--drift, 20px) * 0.4), -25vh) scale(1); }
+  50% { transform: translate(calc(var(--drift, 20px) * -0.3), -55vh) scale(1); }
+  75% { transform: translate(calc(var(--drift, 20px) * 0.5), -82vh) scale(0.96); }
+  100% { opacity: 0; transform: translate(var(--drift, 20px), -112vh) scale(0.9); }
+}
+
+.rising-lantern .lantern-core {
+  animation: lantern-flicker 2.4s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lantern-core { animation: none; }
+  .rising-lantern { animation-duration: 1ms; }
+}

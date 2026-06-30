@@ -1,0 +1,82 @@
+/* =========================================================================
+   INCENSE — burner interaction, glowing embers, hint label
+   ========================================================================= */
+
+.burner {
+  position: relative;
+  width: 100%;
+  cursor: pointer;
+  border-radius: var(--radius-lg);
+  outline-offset: 6px;
+  transition: transform var(--dur-fast) var(--ease-out-expo);
+}
+.burner:hover { transform: translateY(-2px); }
+.burner:active { transform: translateY(0) scale(0.99); }
+.burner-svg {
+  width: 100%;
+  height: auto;
+  display: block;
+  filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.5));
+}
+
+/* embers hidden until lit */
+.burner .tip {
+  opacity: 0;
+  transform: scale(0);
+  transform-box: fill-box;
+  transform-origin: center;
+  transition: opacity var(--dur-base) var(--ease-out-expo),
+              transform var(--dur-base) var(--ease-out-expo);
+}
+.burner.is-lit .tip {
+  opacity: 1;
+  transform: scale(1);
+  animation: tip-glow 1.3s var(--ease-in-out-soft) infinite;
+}
+.burner.is-lit .tip:nth-child(6) { animation-delay: -0.3s; }
+.burner.is-lit .tip:nth-child(7) { animation-delay: -0.6s; }
+.burner.is-lit .tip:nth-child(8) { animation-delay: -0.9s; }
+
+@keyframes tip-glow {
+  0%, 100% { opacity: 0.8; filter: drop-shadow(0 0 2px var(--incense-tip)); }
+  50%      { opacity: 1;   filter: drop-shadow(0 0 6px var(--ember)); }
+}
+
+/* hint label under the burner */
+.burner-hint {
+  position: absolute;
+  left: 50%;
+  bottom: -1.6rem;
+  transform: translateX(-50%);
+  font-size: var(--text-tiny);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--gold-300);
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0.85;
+  transition: opacity var(--dur-base) ease;
+}
+.burner.is-lit .burner-hint { opacity: 0; }
+
+/* soft pulse ring when first lit */
+.burner::after {
+  content: "";
+  position: absolute;
+  top: 4%;
+  left: 50%;
+  width: 18px;
+  height: 18px;
+  margin-left: -9px;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 170, 80, 0.8);
+  opacity: 0;
+  pointer-events: none;
+}
+.burner.is-igniting::after {
+  animation: bell-ripple 700ms var(--ease-out-expo);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .burner.is-lit .tip { animation: none; }
+}
